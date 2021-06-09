@@ -11,9 +11,6 @@ import by.grsu.movieexplorer.data.model.Movie
 import by.grsu.movieexplorer.presentation.adapter.MovieAdapter
 import by.grsu.movieexplorer.presentation.viewmodel.TopRatedMoviesViewModel
 import kotlinx.android.synthetic.main.fragment_movie_list.*
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
 import org.koin.android.viewmodel.ext.android.viewModel
 
 class MovieListFragment : Fragment(R.layout.fragment_movie_list) {
