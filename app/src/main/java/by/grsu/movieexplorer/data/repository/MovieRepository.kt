@@ -10,5 +10,4 @@ val movieRepositoryModule = module {
 class MovieRepository(private val movieService: MovieService) {
 
     suspend fun getTopRatedMovies() = movieService.getTopRatedMovies()
-
 }

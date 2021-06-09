@@ -1,29 +1,38 @@
 package by.grsu.movieexplorer.presentation.adapter
 
+import android.app.Application
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageButton
+import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import by.grsu.movieexplorer.databinding.MovieListItemBinding
+import by.grsu.movieexplorer.R
 import by.grsu.movieexplorer.data.model.Movie
 import com.bumptech.glide.Glide
 
 class MovieAdapter(private var movies: List<Movie>) :
     RecyclerView.Adapter<MovieAdapter.MovieViewHolder>() {
 
-    inner class MovieViewHolder(private val binding: MovieListItemBinding) :
-        RecyclerView.ViewHolder(binding.root) {
+    inner class MovieViewHolder(itemView: View) :
+        RecyclerView.ViewHolder(itemView) {
+
+        var textViewMovieTitle: TextView = itemView.findViewById(R.id.text_movie_title)
+        var imageBtnMoviePoster: ImageButton = itemView.findViewById(R.id.image_movie_poster)
+
         fun bind(movie: Movie) {
-            Glide.with(binding.root.context)
+            Glide.with(itemView.context)
                 .load(movie.poster)
-                .into(binding.imageMoviePoster)
-            binding.textMovieTitle.text = movie.title
+                .into(imageBtnMoviePoster)
+            textViewMovieTitle.text = movie.title
         }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieViewHolder {
-        val binding = MovieListItemBinding
-            .inflate(LayoutInflater.from(parent.context), parent, false)
-        return MovieViewHolder(binding)
+        val itemView =
+            LayoutInflater.from(parent.context)
+                .inflate(R.layout.movie_list_item, parent, false)
+        return MovieViewHolder(itemView)
     }
 
     override fun onBindViewHolder(holder: MovieViewHolder, position: Int) {
@@ -35,7 +44,7 @@ class MovieAdapter(private var movies: List<Movie>) :
         return movies.size
     }
 
-    fun refreshData(){
+    fun refreshData() {
         notifyDataSetChanged()
     }
 }

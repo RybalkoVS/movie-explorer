@@ -10,7 +10,9 @@ val topRatedMoviesViewModelModule = module {
     viewModel { get()}
 }
 
-class TopRatedMoviesViewModel(private val movieRepository: MovieRepository):ViewModel() {
+class TopRatedMoviesViewModel(
+    private val movieRepository: MovieRepository
+    ):ViewModel() {
 
     //suspend fun getTopRatedMovies():List<Movie> = movieRepository.getTopRatedMovies()
 }

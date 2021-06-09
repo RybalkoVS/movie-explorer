@@ -11,7 +11,7 @@
         android:layout_height="280dp"
         android:layout_gravity="center">
 
-        <ImageView
+        <ImageButton
             android:id="@+id/image_movie_poster"
             android:layout_width="150dp"
             android:layout_height="255dp"
