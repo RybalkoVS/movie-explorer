@@ -2,7 +2,6 @@ package by.grsu.movieexplorer.presentation.activity
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.os.PersistableBundle
 import android.view.MenuItem
 import by.grsu.movieexplorer.R
 import by.grsu.movieexplorer.presentation.fragment.FavouritesFragment
@@ -26,22 +25,19 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
         setupBottomNavigation()
     }
 
-    private fun setupBottomNavigation(){
+    private fun setupBottomNavigation() {
         bottom_nav_bar.setOnNavigationItemSelectedListener(this)
-        bottom_nav_bar.setOnNavigationItemReselectedListener {  }
+        bottom_nav_bar.setOnNavigationItemReselectedListener { }
     }
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         val transaction = fragmentManager.beginTransaction()
-        when(item.itemId){
+        when (item.itemId) {
             R.id.menu_item_home -> {
-                transaction
-                    .addToBackStack(null)
-                    .replace(R.id.fragment_container, homeFragment)
+                transaction.replace(R.id.fragment_container, homeFragment)
             }
             R.id.menu_item_favourites -> {
-                transaction
-                    .addToBackStack(null)
+                transaction.addToBackStack(null)
                     .replace(R.id.fragment_container, favouritesFragment)
             }
             else -> {
@@ -50,6 +46,20 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
         }
         transaction.commit()
         return true
+    }
+
+    override fun onBackPressed() {
+        when (fragmentManager.findFragmentById(R.id.fragment_container)) {
+            homeFragment -> {
+                finish()
+            }
+            favouritesFragment -> {
+                fragmentManager.beginTransaction()
+                    .replace(R.id.fragment_container, homeFragment)
+                    .commit()
+                bottom_nav_bar.selectedItemId = R.id.menu_item_home
+            }
+        }
     }
 
 }
