@@ -7,7 +7,9 @@ val movieRepositoryModule = module {
     factory { MovieRepository(get()) }
 }
 
-class MovieRepository(private val movieService: MovieService) {
+class MovieRepository(
+    private val movieService: MovieService
+    ) {
 
-    suspend fun getTopRatedMovies() = movieService.getTopRatedMovies()
+    suspend fun getTopRatedMovies() = movieService.getTopRatedMovies().movieList
 }

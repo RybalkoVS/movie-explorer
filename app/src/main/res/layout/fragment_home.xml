@@ -8,7 +8,7 @@
 
     <ImageButton
         android:id="@+id/image_btn_top_rated"
-        android:layout_width="150dp"
+        android:layout_width="160dp"
         android:layout_height="255dp"
         android:layout_alignParentTop="true"
         android:layout_marginTop="16dp"

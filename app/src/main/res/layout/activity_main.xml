@@ -6,16 +6,11 @@
     android:layout_height="match_parent"
     tools:context=".presentation.activity.MainActivity">
 
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_above="@+id/bottom_nav_bar">
     <FrameLayout
         android:id="@+id/fragment_container"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        />
-    </ScrollView>
+        android:layout_height="match_parent"
+        android:layout_above="@+id/bottom_nav_bar"/>
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottom_nav_bar"

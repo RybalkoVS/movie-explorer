@@ -6,6 +6,7 @@ import android.view.MenuItem
 import by.grsu.movieexplorer.R
 import by.grsu.movieexplorer.presentation.fragment.FavouritesFragment
 import by.grsu.movieexplorer.presentation.fragment.HomeFragment
+import by.grsu.movieexplorer.presentation.fragment.MovieListFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -27,7 +28,7 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
 
     private fun setupBottomNavigation() {
         bottom_nav_bar.setOnNavigationItemSelectedListener(this)
-        bottom_nav_bar.setOnNavigationItemReselectedListener { }
+        //bottom_nav_bar.setOnNavigationItemReselectedListener { }
     }
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
@@ -58,6 +59,9 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
                     .replace(R.id.fragment_container, homeFragment)
                     .commit()
                 bottom_nav_bar.selectedItemId = R.id.menu_item_home
+            }
+            else -> {
+                fragmentManager.popBackStack()
             }
         }
     }

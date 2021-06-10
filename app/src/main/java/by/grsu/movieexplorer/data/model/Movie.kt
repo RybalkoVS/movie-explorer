@@ -13,9 +13,7 @@ data class Movie(
 ){
     @SerializedName("poster_path")
     var poster:String? = null
-    set(value) {
-        field = "https://image.tmdb.org/t/p/original/$value"
-    }
+        get() = "https://image.tmdb.org/t/p/original$field"
 
 //    var trailerLink:String? = null
 //    set(value) {
