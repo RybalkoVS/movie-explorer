@@ -1,59 +1,91 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:gravity="center|top"
     tools:context=".presentation.fragment.HomeFragment">
 
-    <ImageButton
-        android:id="@+id/image_btn_top_rated"
-        android:layout_width="160dp"
-        android:layout_height="255dp"
-        android:layout_alignParentTop="true"
-        android:layout_marginTop="16dp"
-        android:padding="0dp"
-        android:scaleType="fitXY"
-        android:src="@drawable/top_rated"
-        android:elevation="1dp"
-        android:contentDescription="@string/top_rated_movies"/>
-
-    <TextView
-        android:layout_width="wrap_content"
+    <RelativeLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/image_btn_top_rated"
-        android:text="@string/top_rated_movies"
-        android:textStyle="bold"
-        android:textSize="20sp"
-        android:textColor="@color/black"
-        android:layout_marginTop="8dp"
-        />
+        android:layout_marginBottom="4dp"
+        android:gravity="center|top">
 
-    <ImageButton
-        android:id="@+id/image_btn_popular"
-        android:layout_width="150dp"
-        android:layout_height="255dp"
-        android:layout_alignParentTop="true"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="16dp"
-        android:layout_toEndOf="@+id/image_btn_top_rated"
-        android:padding="0dp"
-        android:scaleType="fitXY"
-        android:src="@drawable/popular"
-        android:elevation="3dp"
-        android:contentDescription="@string/popular_movies"
-        />
+        <ImageButton
+            android:id="@+id/image_btn_top_rated"
+            android:layout_width="wrap_content"
+            android:layout_height="200dp"
+            android:layout_alignParentTop="true"
+            android:layout_marginHorizontal="8dp"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/image_btn_background"
+            android:contentDescription="@string/top_rated_movies"
+            android:elevation="3dp"
+            android:scaleType="fitXY"
+            android:src="@drawable/top_rated" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/image_btn_popular"
-        android:layout_alignStart="@id/image_btn_popular"
-        android:text="@string/popular_movies"
-        android:textStyle="bold"
-        android:textSize="20sp"
-        android:textColor="@color/black"
-        android:layout_marginTop="8dp"
-        />
+        <TextView
+            android:id="@+id/text_top_rated"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/image_btn_top_rated"
+            android:layout_alignStart="@+id/image_btn_top_rated"
+            android:layout_marginTop="8dp"
+            android:text="@string/top_rated_movies"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            android:textStyle="bold" />
 
-</RelativeLayout>
+        <ImageButton
+            android:id="@+id/image_btn_popular"
+            android:layout_width="wrap_content"
+            android:layout_height="200dp"
+            android:layout_below="@+id/text_top_rated"
+            android:layout_marginHorizontal="8dp"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/image_btn_background"
+            android:contentDescription="@string/popular_movies"
+            android:elevation="3dp"
+            android:padding="0dp"
+            android:scaleType="fitXY"
+            android:src="@drawable/popular" />
+
+        <TextView
+            android:id="@+id/text_popular"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/image_btn_popular"
+            android:layout_alignStart="@id/image_btn_popular"
+            android:layout_marginTop="8dp"
+            android:text="@string/popular_movies"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <ImageButton
+            android:id="@+id/image_btn_upcoming"
+            android:layout_width="wrap_content"
+            android:layout_height="200dp"
+            android:layout_below="@+id/text_popular"
+            android:layout_marginHorizontal="8dp"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/image_btn_background"
+            android:contentDescription="@string/popular_movies"
+            android:elevation="3dp"
+            android:padding="0dp"
+            android:scaleType="fitXY"
+            android:src="@drawable/upcoming" />
+
+        <TextView
+            android:id="@+id/text_upcoming"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/image_btn_upcoming"
+            android:layout_alignStart="@id/image_btn_popular"
+            android:layout_marginTop="8dp"
+            android:text="@string/upcoming_movies"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+    </RelativeLayout>
+</ScrollView>

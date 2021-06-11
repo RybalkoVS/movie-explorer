@@ -1,6 +1,5 @@
 package by.grsu.movieexplorer.presentation.adapter
 
-import android.app.Application
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -17,14 +16,15 @@ class MovieAdapter(private var movies: List<Movie>) :
     inner class MovieViewHolder(itemView: View) :
         RecyclerView.ViewHolder(itemView) {
 
-        var textViewMovieTitle: TextView = itemView.findViewById(R.id.text_movie_title)
-        var imageBtnMoviePoster: ImageButton = itemView.findViewById(R.id.image_movie_poster)
+        private var textViewMovieTitle: TextView = itemView.findViewById(R.id.text_movie_title)
+        private var imageBtnMoviePoster: ImageButton = itemView.findViewById(R.id.image_movie_poster)
 
         fun bind(movie: Movie) {
             Glide.with(itemView.context)
                 .load(movie.poster)
                 .into(imageBtnMoviePoster)
             textViewMovieTitle.text = movie.title
+            imageBtnMoviePoster.clipToOutline = true
         }
     }
 

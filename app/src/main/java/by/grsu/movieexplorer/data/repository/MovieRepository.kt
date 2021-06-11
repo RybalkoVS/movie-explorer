@@ -8,8 +8,9 @@ val movieRepositoryModule = module {
 }
 
 class MovieRepository(
-    private val movieService: MovieService
-    ) {
+    private val movieService: MovieService ) {
 
     suspend fun getTopRatedMovies() = movieService.getTopRatedMovies().movieList
+    suspend fun getPopularMovies() = movieService.getPopularMovies().movieList
+    suspend fun getUpcomingMovies() = movieService.getUpcomingMovies().movieList
 }

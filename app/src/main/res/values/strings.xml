@@ -1,6 +1,5 @@
 <resources>
     <string name="app_name">Movie Explorer</string>
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="home_menu_item">Home</string>
     <string name="favourites_menu_item">Favourites</string>
     <string name="top_rated_movies">Top Rated</string>
@@ -8,4 +7,6 @@
     <string name="movie_poster">Movie poster</string>
     <string name="search">Search</string>
     <string name="filters">Filters</string>
+    <string name="upcoming_movies">Upcoming</string>
+    <string name="movie_list_type">MovieListType</string>
 </resources>

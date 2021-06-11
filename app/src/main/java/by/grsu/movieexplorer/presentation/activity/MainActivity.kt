@@ -6,15 +6,14 @@ import android.view.MenuItem
 import by.grsu.movieexplorer.R
 import by.grsu.movieexplorer.presentation.fragment.FavouritesFragment
 import by.grsu.movieexplorer.presentation.fragment.HomeFragment
-import by.grsu.movieexplorer.presentation.fragment.MovieListFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemSelectedListener {
 
     private val fragmentManager by lazy { supportFragmentManager }
     private val homeFragment by lazy { HomeFragment() }
     private val favouritesFragment by lazy { FavouritesFragment() }
+    private lateinit var bottomNavBar: BottomNavigationView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -23,11 +22,12 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
             .add(R.id.fragment_container, homeFragment)
             .addToBackStack(null)
             .commit()
+        bottomNavBar = findViewById(R.id.bottom_nav_bar)
         setupBottomNavigation()
     }
 
     private fun setupBottomNavigation() {
-        bottom_nav_bar.setOnNavigationItemSelectedListener(this)
+        bottomNavBar.setOnNavigationItemSelectedListener(this)
         //bottom_nav_bar.setOnNavigationItemReselectedListener { }
     }
 
@@ -55,10 +55,8 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
                 finish()
             }
             favouritesFragment -> {
-                fragmentManager.beginTransaction()
-                    .replace(R.id.fragment_container, homeFragment)
-                    .commit()
-                bottom_nav_bar.selectedItemId = R.id.menu_item_home
+                fragmentManager.popBackStack()
+                bottomNavBar.selectedItemId = R.id.menu_item_home
             }
             else -> {
                 fragmentManager.popBackStack()
