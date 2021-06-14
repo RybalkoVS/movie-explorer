@@ -6,6 +6,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import by.grsu.movieexplorer.R
+import org.koin.dsl.module
+
+val favouritesFragmentModule = module{
+    factory { FavouritesFragment() }
+}
 
 class FavouritesFragment : Fragment(R.layout.fragment_favourites) {
 

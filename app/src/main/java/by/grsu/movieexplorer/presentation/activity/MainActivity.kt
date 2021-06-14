@@ -7,12 +7,13 @@ import by.grsu.movieexplorer.R
 import by.grsu.movieexplorer.presentation.fragment.FavouritesFragment
 import by.grsu.movieexplorer.presentation.fragment.HomeFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import org.koin.android.ext.android.inject
 
 class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemSelectedListener {
 
     private val fragmentManager by lazy { supportFragmentManager }
-    private val homeFragment by lazy { HomeFragment() }
-    private val favouritesFragment by lazy { FavouritesFragment() }
+    private val homeFragment by inject<HomeFragment>()
+    private val favouritesFragment by inject<FavouritesFragment>()
     private lateinit var bottomNavBar: BottomNavigationView
 
     override fun onCreate(savedInstanceState: Bundle?) {

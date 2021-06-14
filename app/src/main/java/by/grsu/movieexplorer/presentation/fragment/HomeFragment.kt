@@ -6,10 +6,16 @@ import android.view.View
 import android.widget.ImageButton
 import by.grsu.movieexplorer.R
 import by.grsu.movieexplorer.presentation.activity.MainActivity
+import org.koin.android.ext.android.inject
+import org.koin.dsl.module
+
+val homeFragmentModule = module{
+    factory { HomeFragment() }
+}
 
 class HomeFragment : Fragment(R.layout.fragment_home), View.OnClickListener {
 
-    private val movieListFragment by lazy { MovieListFragment() }
+    private val movieListFragment by inject<MovieListFragment>()
     private lateinit var imageBtnTopRated: ImageButton
     private lateinit var imageBtnPopular: ImageButton
     private lateinit var imageBtnUpcoming: ImageButton
