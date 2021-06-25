@@ -6,16 +6,10 @@ import android.view.View
 import android.widget.ImageButton
 import by.grsu.movieexplorer.R
 import by.grsu.movieexplorer.presentation.activity.MainActivity
-import org.koin.android.ext.android.inject
-import org.koin.dsl.module
 
-val homeFragmentModule = module{
-    factory { HomeFragment() }
-}
 
 class HomeFragment : Fragment(R.layout.fragment_home), View.OnClickListener {
 
-    private val movieListFragment by inject<MovieListFragment>()
     private lateinit var imageBtnTopRated: ImageButton
     private lateinit var imageBtnPopular: ImageButton
     private lateinit var imageBtnUpcoming: ImageButton
@@ -36,6 +30,7 @@ class HomeFragment : Fragment(R.layout.fragment_home), View.OnClickListener {
 
     override fun onClick(v: View?) {
         val bundle = Bundle()
+        val movieListFragment = MovieListFragment.newInstance()
         when (v) {
             imageBtnTopRated -> {
                 bundle.putString(
@@ -59,12 +54,12 @@ class HomeFragment : Fragment(R.layout.fragment_home), View.OnClickListener {
                 movieListFragment.arguments = bundle
             }
         }
-        moveToMovieListFragment()
+        moveToMovieListFragment(movieListFragment)
     }
 
-    private fun moveToMovieListFragment() {
+    private fun moveToMovieListFragment(fragment: MovieListFragment) {
         (activity as MainActivity).supportFragmentManager.beginTransaction()
-            .replace(R.id.fragment_container, movieListFragment)
+            .replace(R.id.fragment_container, fragment)
             .addToBackStack(null)
             .commit()
     }
@@ -74,5 +69,16 @@ class HomeFragment : Fragment(R.layout.fragment_home), View.OnClickListener {
         imageBtnPopular.clipToOutline = true
         imageBtnUpcoming.clipToOutline = true
     }
+
+    companion object{
+
+        fun newInstance(): HomeFragment{
+            val fragment = HomeFragment()
+            val args = Bundle()
+            fragment.arguments = args
+            return fragment
+        }
+    }
+
 
 }
