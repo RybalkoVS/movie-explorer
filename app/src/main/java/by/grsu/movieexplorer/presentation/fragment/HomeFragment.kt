@@ -79,6 +79,4 @@ class HomeFragment : Fragment(R.layout.fragment_home), View.OnClickListener {
             return fragment
         }
     }
-
-
 }

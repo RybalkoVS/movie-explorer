@@ -2,15 +2,12 @@ package by.grsu.movieexplorer.presentation.activity
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.os.PersistableBundle
-import android.transition.Transition
 import android.view.MenuItem
 import androidx.fragment.app.FragmentTransaction
 import by.grsu.movieexplorer.R
 import by.grsu.movieexplorer.presentation.fragment.FavouritesFragment
 import by.grsu.movieexplorer.presentation.fragment.HomeFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import org.koin.android.ext.android.inject
 
 class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemSelectedListener {
 
@@ -29,7 +26,7 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
 
     private fun setupBottomNavigation() {
         bottomNavBar.setOnNavigationItemSelectedListener(this)
-        //bottom_nav_bar.setOnNavigationItemReselectedListener { }
+        bottomNavBar.setOnNavigationItemReselectedListener { }
     }
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
@@ -53,10 +50,10 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
 
     override fun onBackPressed() {
         when (fragmentManager.findFragmentById(R.id.fragment_container)) {
-            HomeFragment() -> {
+            is HomeFragment -> {
                 finish()
             }
-            FavouritesFragment() -> {
+            is FavouritesFragment -> {
                 fragmentManager.popBackStack()
                 bottomNavBar.selectedItemId = R.id.menu_item_home
             }
