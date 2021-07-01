@@ -4,46 +4,50 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageButton
+import android.widget.ImageView
 import android.widget.TextView
-import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import by.grsu.movieexplorer.R
 import by.grsu.movieexplorer.data.model.Movie
 import com.bumptech.glide.Glide
 
-class MovieAdapter(private var movies: List<Movie>) :
-    RecyclerView.Adapter<MovieAdapter.MovieViewHolder>() {
+class MovieAdapter(
+    private var movies: List<Movie>?,
+    private val onItemClickListener: OnItemClickListener
+) : RecyclerView.Adapter<MovieAdapter.MovieViewHolder>() {
 
-    inner class MovieViewHolder(itemView: View) :
-        RecyclerView.ViewHolder(itemView) /*,View.OnClickListener*/ {
 
+    interface OnItemClickListener {
+        fun onItemClick(movie: Movie)
+        fun onAddToFavouritesClick(movie: Movie)
+    }
+
+    inner class MovieViewHolder(itemView: View):
+        RecyclerView.ViewHolder(itemView) {
         private var textViewMovieTitle: TextView = itemView.findViewById(R.id.text_movie_title)
-        private var imageBtnMoviePoster: ImageButton =
+        private var imageBtnMoviePoster: ImageView =
             itemView.findViewById(R.id.image_movie_poster)
         private var imageBtnAddToFavourites: ImageButton =
             itemView.findViewById(R.id.image_btn_add_to_favourites)
 
-        init {
-//            imageBtnAddToFavourites.setOnClickListener(this)
-        }
-
-        fun bind(movie: Movie) {
+        fun bind(movie: Movie, onItemClickListener: OnItemClickListener) {
             Glide.with(itemView.context)
                 .load(movie.poster)
                 .into(imageBtnMoviePoster)
             textViewMovieTitle.text = movie.title
             imageBtnMoviePoster.clipToOutline = true
+            itemView.setOnClickListener {
+                onItemClickListener.onItemClick(movie)
+            }
+            imageBtnAddToFavourites.setOnClickListener {
+                onItemClickListener.onAddToFavouritesClick(movie)
+            }
+            if (movie.isFavourite) {
+                imageBtnAddToFavourites.setImageResource(R.drawable.ic_action_done)
+            } else {
+                imageBtnAddToFavourites.setImageResource(R.drawable.ic_action_add)
+            }
         }
-
-//        override fun onClick(v: View?) {
-//            when (v) {
-//                imageBtnAddToFavourites -> {
-//                    imageBtnAddToFavourites.setImageResource(R.drawable.ic_action_done)
-//                    Toast.makeText(itemView.context, "Added to favourites", Toast.LENGTH_SHORT)
-//                        .show()
-//                }
-//            }
-//        }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieViewHolder {
@@ -54,15 +58,15 @@ class MovieAdapter(private var movies: List<Movie>) :
     }
 
     override fun onBindViewHolder(holder: MovieViewHolder, position: Int) {
-        holder.bind(movies[position])
+        if (movies != null) {
+            holder.bind(movies!![position], onItemClickListener)
+        }
     }
 
     override fun getItemCount(): Int {
-        return movies.size
+        if (movies != null) {
+            return movies!!.size
+        }
+        return 0
     }
-
-    fun refreshData() {
-        notifyDataSetChanged()
-    }
-
 }

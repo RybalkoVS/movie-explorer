@@ -1,6 +1,8 @@
 package by.grsu.movieexplorer.data.repository
 
+import by.grsu.movieexplorer.data.model.MovieResponse
 import by.grsu.movieexplorer.data.network.MovieService
+import io.reactivex.rxjava3.core.Flowable
 import org.koin.dsl.module
 
 val movieRepositoryModule = module {
@@ -9,7 +11,6 @@ val movieRepositoryModule = module {
 
 class MovieRepository(
     private val movieService: MovieService ) {
-
     suspend fun getTopRatedMovies() = movieService.getTopRatedMovies().movieList
     suspend fun getPopularMovies() = movieService.getPopularMovies().movieList
     suspend fun getUpcomingMovies() = movieService.getUpcomingMovies().movieList

@@ -9,5 +9,6 @@
     <string name="filters">Filters</string>
     <string name="upcoming_movies">Upcoming</string>
     <string name="movie_list_type">MovieListType</string>
-    <string name="add_to_favourites">Add to favourites</string>
+    <string name="add_to_favourites">Added to favourites</string>
+    <string name="already_in_favourites_notification">Movie already in favourites!</string>
 </resources>

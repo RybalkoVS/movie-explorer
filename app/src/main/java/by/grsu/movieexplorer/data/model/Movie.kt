@@ -13,7 +13,7 @@ data class Movie(
     var title: String? = null,
 //    var overview: String? = null,
 //    var genres: List<Genre>? = null,
-//    var isFavourite: Boolean = false
+    var isFavourite: Boolean = false
 ) {
     @SerializedName("poster_path")
     var poster: String? = null
