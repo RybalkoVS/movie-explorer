@@ -16,13 +16,12 @@ class MovieAdapter(
     private val onItemClickListener: OnItemClickListener
 ) : RecyclerView.Adapter<MovieAdapter.MovieViewHolder>() {
 
-
     interface OnItemClickListener {
         fun onItemClick(movie: Movie)
         fun onAddToFavouritesClick(movie: Movie)
     }
 
-    inner class MovieViewHolder(itemView: View):
+    inner class MovieViewHolder(itemView: View) :
         RecyclerView.ViewHolder(itemView) {
         private var textViewMovieTitle: TextView = itemView.findViewById(R.id.text_movie_title)
         private var imageBtnMoviePoster: ImageView =
@@ -53,7 +52,7 @@ class MovieAdapter(
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieViewHolder {
         val itemView =
             LayoutInflater.from(parent.context)
-                .inflate(R.layout.movie_list_item, parent, false)
+                .inflate(R.layout.item_movie, parent, false)
         return MovieViewHolder(itemView)
     }
 
