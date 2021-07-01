@@ -1,8 +1,7 @@
 package by.grsu.movieexplorer.data.network
 
-import by.grsu.movieexplorer.data.model.Movie
 import by.grsu.movieexplorer.data.model.MovieResponse
-import retrofit2.Call
+import io.reactivex.rxjava3.core.Single
 import retrofit2.http.GET
 
 interface MovieService {
@@ -12,12 +11,12 @@ interface MovieService {
     }
 
     @GET("movie/top_rated")
-    suspend fun getTopRatedMovies(): MovieResponse
+    fun getTopRatedMovies(): Single<MovieResponse>
 
     @GET("movie/popular")
-    suspend fun getPopularMovies(): MovieResponse
+    fun getPopularMovies(): Single<MovieResponse>
 
     @GET("movie/upcoming")
-    suspend fun getUpcomingMovies(): MovieResponse
+    fun getUpcomingMovies(): Single<MovieResponse>
 
 }
