@@ -25,7 +25,7 @@ class MovieAdapter(
         RecyclerView.ViewHolder(itemView) {
         private var textViewMovieTitle: TextView = itemView.findViewById(R.id.text_movie_title)
         private var imageBtnMoviePoster: ImageView =
-            itemView.findViewById(R.id.image_movie_poster)
+            itemView.findViewById(R.id.image_btn_movie_poster)
         private var imageBtnAddToFavourites: ImageButton =
             itemView.findViewById(R.id.image_btn_add_to_favourites)
 
@@ -35,7 +35,7 @@ class MovieAdapter(
                 .into(imageBtnMoviePoster)
             textViewMovieTitle.text = movie.title
             imageBtnMoviePoster.clipToOutline = true
-            itemView.setOnClickListener {
+            imageBtnMoviePoster.setOnClickListener {
                 onItemClickListener.onItemClick(movie)
             }
             imageBtnAddToFavourites.setOnClickListener {

@@ -6,10 +6,6 @@ import retrofit2.http.GET
 
 interface MovieService {
 
-    companion object {
-        const val BASE_URL = "https://api.themoviedb.org/3/"
-    }
-
     @GET("movie/top_rated")
     fun getTopRatedMovies(): Single<MovieResponse>
 

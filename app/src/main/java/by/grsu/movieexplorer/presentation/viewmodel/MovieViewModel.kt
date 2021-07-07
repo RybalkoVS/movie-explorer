@@ -1,10 +1,11 @@
 package by.grsu.movieexplorer.presentation.viewmodel
 
 
+import android.widget.Toast
 import androidx.lifecycle.*
 import by.grsu.movieexplorer.data.model.Movie
-import by.grsu.movieexplorer.data.repository.FavouriteMovieRepository
-import by.grsu.movieexplorer.data.repository.MovieRepository
+import by.grsu.movieexplorer.data.repository.LocalMovieRepository
+import by.grsu.movieexplorer.data.repository.RemoteMovieRepository
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.schedulers.Schedulers
 import org.koin.android.viewmodel.dsl.viewModel
@@ -15,8 +16,8 @@ val movieViewModelModule = module {
 }
 
 class MovieViewModel(
-    private val movieRepository: MovieRepository,
-    private val favouriteMovieRepository: FavouriteMovieRepository
+    private val remoteMovieRepository: RemoteMovieRepository,
+    private val localMovieRepository: LocalMovieRepository
 ) : ViewModel() {
 
     private val _favourites: MutableLiveData<List<Movie>> = MutableLiveData()
@@ -46,7 +47,7 @@ class MovieViewModel(
     }
 
     private fun loadTopRatedMovies() {
-        movieRepository.getTopRatedMovies()
+        remoteMovieRepository.getTopRatedMovies()
             .subscribeOn(Schedulers.newThread())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({
@@ -58,7 +59,7 @@ class MovieViewModel(
     }
 
     private fun loadPopularMovies() {
-        movieRepository.getPopularMovies()
+        remoteMovieRepository.getPopularMovies()
             .subscribeOn(Schedulers.newThread())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({
@@ -70,7 +71,7 @@ class MovieViewModel(
     }
 
     private fun loadUpcomingMovies() {
-        movieRepository.getUpcomingMovies()
+        remoteMovieRepository.getUpcomingMovies()
             .subscribeOn(Schedulers.newThread())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({
@@ -82,14 +83,14 @@ class MovieViewModel(
     }
 
     private fun loadFavourites() {
-        favouriteMovieRepository.getFavouritesAsync()
+        localMovieRepository.getFavouritesAsync()
             .subscribeOn(Schedulers.newThread())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe { _favourites.postValue(it) }
     }
 
     fun insert(movie: Movie) {
-        favouriteMovieRepository.insert(movie)
+        localMovieRepository.insert(movie)
             .subscribeOn(Schedulers.newThread())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe { }

@@ -1,5 +1,6 @@
 package by.grsu.movieexplorer.data.network
 
+import by.grsu.movieexplorer.util.Constants
 import okhttp3.OkHttpClient
 import org.koin.dsl.module
 import retrofit2.Retrofit
@@ -16,7 +17,7 @@ class RetrofitClient {
     companion object {
         fun provideRetrofit(okHttpClient: OkHttpClient): Retrofit {
             return Retrofit.Builder()
-                .baseUrl(MovieService.BASE_URL)
+                .baseUrl(Constants.BASE_URL)
                 .client(okHttpClient)
                 .addConverterFactory(GsonConverterFactory.create())
                 .addCallAdapterFactory(RxJava3CallAdapterFactory.create())
@@ -28,7 +29,7 @@ class RetrofitClient {
                 .addInterceptor {
                     var request = it.request()
                     val url = request.url().newBuilder()
-                        .addQueryParameter("api_key", "a629ba31fce2bc863e700cf8de0d882d")
+                        .addQueryParameter(Constants.API_KEY, Constants.API_KEY_VALUE)
                         .build()
                     request = request.newBuilder().url(url).build()
                     return@addInterceptor it.proceed(request)

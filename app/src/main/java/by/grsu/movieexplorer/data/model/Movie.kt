@@ -11,15 +11,13 @@ data class Movie(
     var id: Int? = null,
     @SerializedName("title")
     var title: String? = null,
-//    var overview: String? = null,
-//    var genres: List<Genre>? = null,
+    var overview: String? = null,
     var isFavourite: Boolean = false
 ) {
     @SerializedName("poster_path")
     var poster: String? = null
         get() = "https://image.tmdb.org/t/p/original$field"
 
-//    var trailerLink: String? = null
-//        get() = "https://www.youtube.com/watch?v=$field"
-
+    var trailerLink: String? = null
+        get() = "https://www.youtube.com/watch?v=$field"
 }

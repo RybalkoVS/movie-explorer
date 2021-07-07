@@ -12,7 +12,7 @@ import org.koin.dsl.module
 val movieDatabaseModule = module {
     fun provideMovieDatabase(application: Application): MovieDatabase {
         return Room.databaseBuilder(application, MovieDatabase::class.java, "MovieDb")
-            .fallbackToDestructiveMigration()
+            .addMigrations(Migrations.migration_1_2)
             .build()
     }
 
@@ -24,7 +24,7 @@ val movieDatabaseModule = module {
     single { provideMovieDao(get()) }
 }
 
-@Database(entities = [Movie::class], version = 1, exportSchema = false)
+@Database(entities = [Movie::class], version = 2, exportSchema = false)
 abstract class MovieDatabase : RoomDatabase() {
     abstract fun MovieDao(): MovieDao
 }
