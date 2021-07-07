@@ -5,6 +5,7 @@
     android:layout_height="290dp"
     android:layout_marginHorizontal="8dp"
     android:layout_marginVertical="4dp"
+    android:foreground="?android:attr/selectableItemBackground"
     android:padding="4dp">
 
     <ImageView
@@ -28,9 +29,8 @@
         android:contentDescription="@string/add_to_favourites"
         />
 
-
     <ImageButton
-        android:id="@+id/image_movie_poster"
+        android:id="@+id/image_btn_movie_poster"
         android:layout_width="match_parent"
         android:layout_height="255dp"
         android:background="@drawable/image_btn_background"

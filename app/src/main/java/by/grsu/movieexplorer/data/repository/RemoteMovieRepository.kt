@@ -5,11 +5,11 @@ import by.grsu.movieexplorer.data.network.MovieService
 import io.reactivex.rxjava3.core.Single
 import org.koin.dsl.module
 
-val movieRepositoryModule = module {
-    factory { MovieRepository(get()) }
+val remoteMovieRepositoryModule = module {
+    factory { RemoteMovieRepository(get()) }
 }
 
-class MovieRepository(
+class RemoteMovieRepository(
     private val movieService: MovieService
 ) {
     fun getTopRatedMovies(): Single<MovieResponse> = movieService.getTopRatedMovies()

@@ -26,7 +26,7 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
 
     private fun setupBottomNavigation() {
         bottomNavBar.setOnNavigationItemSelectedListener(this)
-        bottomNavBar.setOnNavigationItemReselectedListener { }
+//        bottomNavBar.setOnNavigationItemReselectedListener { }
     }
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {

@@ -13,6 +13,7 @@ import by.grsu.movieexplorer.data.model.Movie
 import by.grsu.movieexplorer.presentation.activity.MainActivity
 import by.grsu.movieexplorer.presentation.adapter.MovieAdapter
 import by.grsu.movieexplorer.presentation.viewmodel.MovieViewModel
+import by.grsu.movieexplorer.util.Constants
 import org.koin.android.viewmodel.ext.android.viewModel
 
 class MovieListFragment : Fragment(R.layout.fragment_movie_list), MovieAdapter.OnItemClickListener {
@@ -39,6 +40,10 @@ class MovieListFragment : Fragment(R.layout.fragment_movie_list), MovieAdapter.O
     }
 
     override fun onItemClick(movie: Movie) {
+        val movieDetailFragment = MovieDetailFragment.newInstance()
+        val bundle = Bundle()
+        bundle.putInt(Constants.EXTRA_MOVIE_ID, movie.id!!)
+        movieDetailFragment.arguments
         (activity as MainActivity).supportFragmentManager
             .beginTransaction()
             .replace(R.id.fragment_container, MovieDetailFragment.newInstance())
@@ -99,12 +104,11 @@ class MovieListFragment : Fragment(R.layout.fragment_movie_list), MovieAdapter.O
         })
     }
 
-    private fun setLoadingState(){
-        movieViewModel.loadingState.observe(viewLifecycleOwner,{ loading ->
-            if(loading){
+    private fun setLoadingState() {
+        movieViewModel.loadingState.observe(viewLifecycleOwner, { loading ->
+            if (loading) {
                 loadingState.visibility = View.VISIBLE
-            }
-            else{
+            } else {
                 loadingState.visibility = View.GONE
             }
         })
