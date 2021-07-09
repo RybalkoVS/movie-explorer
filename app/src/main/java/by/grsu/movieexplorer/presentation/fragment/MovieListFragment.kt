@@ -1,6 +1,8 @@
 package by.grsu.movieexplorer.presentation.fragment
 
+import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.View
 import android.widget.ProgressBar
@@ -11,22 +13,39 @@ import androidx.recyclerview.widget.RecyclerView
 import by.grsu.movieexplorer.R
 import by.grsu.movieexplorer.data.model.Movie
 import by.grsu.movieexplorer.presentation.activity.MainActivity
+import by.grsu.movieexplorer.presentation.activity.TabSelectedCallback
 import by.grsu.movieexplorer.presentation.adapter.MovieAdapter
 import by.grsu.movieexplorer.presentation.viewmodel.MovieViewModel
 import by.grsu.movieexplorer.util.Constants
+import com.google.android.material.tabs.TabLayout
 import org.koin.android.viewmodel.ext.android.viewModel
 
-class MovieListFragment : Fragment(R.layout.fragment_movie_list), MovieAdapter.OnItemClickListener {
+class MovieListFragment : Fragment(R.layout.fragment_movie_list), MovieAdapter.OnItemClickListener,
+    TabLayout.OnTabSelectedListener {
 
     private val movieViewModel by viewModel<MovieViewModel>()
+    private lateinit var tabSelectedCallback: TabSelectedCallback
     private lateinit var rvMovieList: RecyclerView
     private lateinit var loadingState: ProgressBar
+    private lateinit var tabLayout: TabLayout
     private var movieAdapter: MovieAdapter? = null
     private var favourites: List<Movie>? = null
+    private var selectedTab: String? = null
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        try {
+            tabSelectedCallback = context as TabSelectedCallback
+        } catch (e: ClassCastException) {
+            Log.i(MOVIE_LIST_FRAGMENT_TAG, e.message.toString())
+        }
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         loadingState = view.findViewById(R.id.progress_bar_loading)
+        tabLayout = view.findViewById(R.id.tab_layout_movie_list_types)
+        tabLayout.addOnTabSelectedListener(this)
         rvMovieList = view.findViewById(R.id.movie_list)
         rvMovieList.layoutManager = GridLayoutManager(context, 2)
 
@@ -35,8 +54,12 @@ class MovieListFragment : Fragment(R.layout.fragment_movie_list), MovieAdapter.O
 
         val bundle = this.arguments
         if (bundle != null) {
-            getCorrectMovieList(bundle)
+            selectedTab = bundle.getString(Constants.EXTRA_MOVIE_LIST_TYPE)
+            if (selectedTab != null) {
+                getCorrectMovieList(selectedTab!!)
+            }
         }
+        setInitialTabSelection()
     }
 
     override fun onItemClick(movie: Movie) {
@@ -71,9 +94,10 @@ class MovieListFragment : Fragment(R.layout.fragment_movie_list), MovieAdapter.O
         }
     }
 
-    private fun getCorrectMovieList(bundle: Bundle) {
+    private fun getCorrectMovieList(movieListType: String) {
         var checkedMovies: List<Movie>?
-        when (bundle.getString(getString(R.string.movie_list_type))) {
+        rvMovieList.adapter = null
+        when (movieListType) {
             getString(R.string.top_rated_movies) -> {
                 movieViewModel.topRatedMovies.observe(viewLifecycleOwner, {
                     checkedMovies = movieViewModel.checkFavourites(it, favourites)
@@ -96,6 +120,7 @@ class MovieListFragment : Fragment(R.layout.fragment_movie_list), MovieAdapter.O
                 })
             }
         }
+        rvMovieList.adapter?.notifyDataSetChanged()
     }
 
     private fun getFavourites() {
@@ -114,12 +139,44 @@ class MovieListFragment : Fragment(R.layout.fragment_movie_list), MovieAdapter.O
         })
     }
 
-    companion object {
-        fun newInstance(): MovieListFragment {
-            val fragment = MovieListFragment()
-            fragment.arguments = Bundle()
-            return fragment
+    private fun setInitialTabSelection() {
+        when (selectedTab) {
+            tabLayout.getTabAt(TAB_TOP_RATED)?.text -> {
+                tabLayout.selectTab(tabLayout.getTabAt(TAB_TOP_RATED))
+            }
+            tabLayout.getTabAt(TAB_POPULAR)?.text -> {
+                tabLayout.selectTab(tabLayout.getTabAt(TAB_POPULAR))
+            }
+            tabLayout.getTabAt(TAB_UPCOMING)?.text -> {
+                tabLayout.selectTab(tabLayout.getTabAt(TAB_UPCOMING))
+            }
         }
     }
 
+    override fun onTabSelected(tab: TabLayout.Tab?) {
+        selectedTab = tab?.text.toString()
+        if (selectedTab != null) {
+            getCorrectMovieList(selectedTab!!)
+            tabSelectedCallback.getSelectedTab(selectedTab!!)
+        }
+    }
+
+    override fun onTabUnselected(tab: TabLayout.Tab?) {}
+
+    override fun onTabReselected(tab: TabLayout.Tab?) {
+        onTabSelected(tab)
+    }
+
+    companion object {
+        const val MOVIE_LIST_FRAGMENT_TAG = "MovieListFragment"
+        const val TAB_TOP_RATED = 0
+        const val TAB_POPULAR = 1
+        const val TAB_UPCOMING = 2
+
+        fun newInstance(bundle: Bundle): MovieListFragment {
+            val fragment = MovieListFragment()
+            fragment.arguments = bundle
+            return fragment
+        }
+    }
 }

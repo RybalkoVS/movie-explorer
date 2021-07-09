@@ -1,7 +1,6 @@
 package by.grsu.movieexplorer.presentation.viewmodel
 
 
-import android.widget.Toast
 import androidx.lifecycle.*
 import by.grsu.movieexplorer.data.model.Movie
 import by.grsu.movieexplorer.data.repository.LocalMovieRepository

@@ -6,34 +6,37 @@ import android.view.MenuItem
 import androidx.fragment.app.FragmentTransaction
 import by.grsu.movieexplorer.R
 import by.grsu.movieexplorer.presentation.fragment.FavouritesFragment
-import by.grsu.movieexplorer.presentation.fragment.HomeFragment
+import by.grsu.movieexplorer.presentation.fragment.MovieListFragment
+import by.grsu.movieexplorer.util.Constants
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
-class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemSelectedListener {
+class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemSelectedListener,
+    TabSelectedCallback {
 
     private val fragmentManager by lazy { supportFragmentManager }
     private lateinit var bottomNavBar: BottomNavigationView
+    private var selectedMovieList: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        if(savedInstanceState == null){
-            setInitialFragment()
-        }
+        setInitialFragment()
         bottomNavBar = findViewById(R.id.bottom_nav_bar)
         setupBottomNavigation()
     }
 
     private fun setupBottomNavigation() {
         bottomNavBar.setOnNavigationItemSelectedListener(this)
-//        bottomNavBar.setOnNavigationItemReselectedListener { }
+        bottomNavBar.setOnNavigationItemReselectedListener { }
     }
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
+        val bundle = Bundle()
+        bundle.putString(Constants.EXTRA_MOVIE_LIST_TYPE, selectedMovieList)
         val transaction = fragmentManager.beginTransaction()
         when (item.itemId) {
             R.id.menu_item_home -> {
-                transaction.replace(R.id.fragment_container, HomeFragment.newInstance())
+                transaction.replace(R.id.fragment_container, MovieListFragment.newInstance(bundle))
             }
             R.id.menu_item_favourites -> {
                 transaction.addToBackStack(null)
@@ -50,7 +53,7 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
 
     override fun onBackPressed() {
         when (fragmentManager.findFragmentById(R.id.fragment_container)) {
-            is HomeFragment -> {
+            is MovieListFragment -> {
                 finish()
             }
             is FavouritesFragment -> {
@@ -63,12 +66,17 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
         }
     }
 
-    private fun setInitialFragment(){
+    private fun setInitialFragment() {
+        val bundle = Bundle()
+        bundle.putString(Constants.EXTRA_MOVIE_LIST_TYPE, getString(R.string.top_rated_movies))
         fragmentManager.beginTransaction()
-            .add(R.id.fragment_container, HomeFragment.newInstance())
+            .replace(R.id.fragment_container, MovieListFragment.newInstance(bundle))
             .addToBackStack(null)
             .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
             .commit()
     }
 
+    override fun getSelectedTab(tabName: String) {
+        selectedMovieList = tabName
+    }
 }

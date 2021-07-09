@@ -11,6 +11,7 @@ data class Movie(
     var id: Int? = null,
     @SerializedName("title")
     var title: String? = null,
+    @SerializedName("overview")
     var overview: String? = null,
     var isFavourite: Boolean = false
 ) {
