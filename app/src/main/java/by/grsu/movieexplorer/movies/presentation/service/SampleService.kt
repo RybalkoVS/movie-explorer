@@ -6,7 +6,6 @@ import android.app.NotificationManager
 import android.app.Service
 import android.content.Context
 import android.content.Intent
-import android.os.Binder
 import android.os.Build
 import android.os.IBinder
 import androidx.annotation.RequiresApi
@@ -17,14 +16,15 @@ import kotlinx.coroutines.*
 
 private const val NOTIFICATION_ID = 1
 private const val CHANNEL_ID = "SampleService"
+private const val NOTIFICATION_TEXT = "Running..."
+private const val NOTIFICATION_NAME = "Sample service channel"
 
 class SampleService : Service() {
 
     private val coroutineScope = CoroutineScope(Dispatchers.IO)
-    private val sampleServiceBinder = SampleServiceBinder()
 
-    override fun onBind(p0: Intent?): IBinder {
-        return sampleServiceBinder
+    override fun onBind(p0: Intent?): IBinder? {
+        return null
     }
 
     override fun onCreate() {
@@ -44,7 +44,7 @@ class SampleService : Service() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             channelId = createNotificationChannel()
             notification = Notification.Builder(this, channelId)
-                .setContentText("Running...")
+                .setContentText(NOTIFICATION_TEXT)
                 .setSmallIcon(R.drawable.ic_favourites)
                 .build()
         } else {
@@ -58,8 +58,8 @@ class SampleService : Service() {
     private fun createNotificationChannel(): String {
         val channel = NotificationChannel(
             CHANNEL_ID,
-            "Sample service channel",
-            NotificationManager.IMPORTANCE_NONE
+            NOTIFICATION_NAME,
+            NotificationManager.IMPORTANCE_DEFAULT
         )
 
         val service = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
@@ -74,11 +74,9 @@ class SampleService : Service() {
             for (i in 0 until 10) {
                 delay(1000)
                 progress += 1
-                withContext(Dispatchers.Main) {
-                    sendBroadcast(Intent(INTENT_ACTION).apply {
-                        putExtra(PROGRESS_VALUE, progress)
-                    })
-                }
+                sendBroadcast(Intent(INTENT_ACTION).apply {
+                    putExtra(PROGRESS_VALUE, progress)
+                })
             }
             stopSelf()
         }
@@ -88,11 +86,5 @@ class SampleService : Service() {
         coroutineScope.cancel()
 
         super.onDestroy()
-    }
-
-    inner class SampleServiceBinder : Binder() {
-
-        val service: SampleService
-            get() = this@SampleService
     }
 }
