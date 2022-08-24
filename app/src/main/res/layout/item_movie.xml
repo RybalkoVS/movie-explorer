@@ -1,42 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="160dp"
-    android:layout_height="290dp"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:layout_marginHorizontal="8dp"
     android:layout_marginVertical="4dp"
-    android:foreground="?android:attr/selectableItemBackground"
+    android:orientation="vertical"
     android:padding="4dp">
-
-    <ImageView
-        android:id="@+id/image_favourites_mark"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/ic_mark"
-        android:background="@android:color/transparent"
-        android:contentDescription="@string/add_to_favourites"
-        android:translationZ="90dp"/>
-
-    <ImageButton
-        android:id="@+id/image_btn_add_to_favourites"
-        android:layout_height="wrap_content"
-        android:layout_width="wrap_content"
-        android:src="@drawable/ic_action_add"
-        android:translationZ="90dp"
-        android:background="@android:color/transparent"
-        android:layout_marginTop="8dp"
-        android:layout_marginStart="9dp"
-        android:contentDescription="@string/add_to_favourites"
-        />
 
     <ImageButton
         android:id="@+id/image_btn_movie_poster"
         android:layout_width="match_parent"
-        android:layout_height="255dp"
+        android:layout_height="0dp"
+        android:layout_weight="0.9"
         android:background="@drawable/image_btn_background"
         android:contentDescription="@string/movie_poster"
-        android:padding="0dp"
-        />
+        android:padding="0dp" />
 
     <TextView
         android:id="@+id/text_movie_title"
@@ -49,5 +27,4 @@
         android:singleLine="true"
         android:textColor="@color/black"
         android:textSize="16sp" />
-
-</FrameLayout>
+</LinearLayout>

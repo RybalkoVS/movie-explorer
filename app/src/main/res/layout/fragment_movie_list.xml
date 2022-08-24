@@ -1,59 +1,53 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_gravity="center_horizontal"
-    tools:context=".presentation.fragment.MovieListFragment">
+    tools:context=".movies.presentation.fragment.MovieListFragment">
 
-    <LinearLayout
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/movie_detail_fragment"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_above="@id/tab_layout_movie_list_types"
-        android:gravity="center"
-        android:orientation="vertical">
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/movie_list"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-    </LinearLayout>
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@+id/tab_layout_movie_categories"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <com.google.android.material.tabs.TabLayout
-        android:id="@+id/tab_layout_movie_list_types"
+        android:id="@+id/tab_layout_movie_categories"
         android:layout_width="match_parent"
         android:layout_height="40dp"
-        android:layout_alignParentBottom="true"
-        app:tabTextColor="@color/black"
-        app:tabGravity="fill">
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:tabGravity="fill"
+        app:tabTextColor="@color/black">
+
         <com.google.android.material.tabs.TabItem
             android:id="@+id/tab_top_rated_movies"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/top_rated_movies"
-            />
+            android:text="@string/top_rated_movies" />
+
         <com.google.android.material.tabs.TabItem
             android:id="@+id/tab_popular_movies"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/popular_movies"
-            />
+            android:text="@string/popular_movies" />
+
         <com.google.android.material.tabs.TabItem
             android:id="@+id/tab_upcoming_movies"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/upcoming_movies"
-            />
+            android:text="@string/upcoming_movies" />
     </com.google.android.material.tabs.TabLayout>
 
-    <ProgressBar
-        android:id="@+id/progress_bar_loading"
+    <include
+        layout="@layout/progress_bar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:indeterminateTint="@color/black"
-        />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-</RelativeLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

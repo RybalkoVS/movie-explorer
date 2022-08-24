@@ -3,6 +3,7 @@
     package="by.grsu.movieexplorer">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
 
     <application
         android:name=".MovieExplorerApp"
@@ -11,13 +12,21 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.MovieExplorer">
-        <activity android:name=".presentation.activity.MainActivity">
+        android:theme="@style/Theme.MovieExplorer"
+        android:usesCleartextTraffic="true">
+        <activity
+            android:name="by.grsu.movieexplorer.movies.presentation.activity.MainActivity"
+            android:exported="true"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <service
+            android:name=".movies.presentation.service.SampleService"
+            android:exported="false" />
 
     </application>
 
